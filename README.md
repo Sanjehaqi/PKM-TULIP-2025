@@ -1,39 +1,86 @@
 <div align="center">
 
-  <img src="https://via.placeholder.com/150?text=PKM+TULIP" alt="Logo Placeholder" width="150" height="150">
+  <img src="https://via.placeholder.com/150?text=PKM+TULIP" alt="Logo PKM TULIP" width="150" height="150">
 
   # PKM-TULIP: Smart Radiation & Air Quality Monitoring
   
   **Sistem Pemantauan Interaktif Kualitas Udara dan Radiasi Berbasis IoT untuk Edukasi Nuklir**
 
   ![Platform](https://img.shields.io/badge/Platform-ESP32-blue?style=for-the-badge&logo=espressif)
+  ![Language](https://img.shields.io/badge/Language-C%2B%2B%20%7C%20HTML-orange?style=for-the-badge)
   ![Communication](https://img.shields.io/badge/Comms-LoRa%20433MHz-red?style=for-the-badge)
-  ![Status](https://img.shields.io/badge/Status-Prototype-green?style=for-the-badge)
-  ![License](https://img.shields.io/badge/License-MIT-orange?style=for-the-badge)
+  ![Sensors](https://img.shields.io/badge/Sensors-Geiger%20%7C%20MQ7-yellow?style=for-the-badge)
+  ![License](https://img.shields.io/badge/License-Open%20Source-green?style=for-the-badge)
 
 </div>
 
 ---
 
-## 📋 Ikhtisar (Overview)
+## 📖 Latar Belakang & Motivasi
 
-**PKM-TULIP** adalah inovasi teknologi pemantauan lingkungan yang menggabungkan deteksi radiasi nuklir dan polusi udara dalam satu perangkat mandiri. Proyek ini dikembangkan untuk **Pekan Kreativitas Mahasiswa (PKM) 2025** dengan tujuan meningkatkan literasi nuklir masyarakat melalui data yang transparan.
+Kualitas udara dan tingkat radiasi lingkungan merupakan dua indikator vital yang berdampak langsung pada kesehatan manusia. Namun, literasi masyarakat terhadap bahaya radiasi dan polusi udara seringkali masih rendah.
 
-### 🌟 Fitur Unggulan
-- **Dual Monitoring:** Deteksi dini bahaya radiasi Gamma dan gas Karbon Monoksida (CO).
-- **Long Range Telemetry:** Menggunakan modul LoRa SX1278 untuk pengiriman data jarak jauh (tanpa internet di node sensor).
-- **Interactive Dashboard:** Visualisasi data *real-time* berbasis web yang mudah diakses.
-- **Independent Power:** Ditenagai baterai 18650 dengan sistem pengisian panel surya.
+**PKM-TULIP** hadir sebagai solusi inovatif yang menggabungkan teknologi nuklir dan *Internet of Things* (IoT). Proyek ini bertujuan untuk:
+1.  **Demokratisasi Data:** Menyediakan data lingkungan yang transparan dan *real-time* bagi masyarakat.
+2.  **Edukasi Nuklir:** Memberikan pemahaman bahwa radiasi lingkungan dapat diukur dan dipantau secara aman.
+3.  **Sistem Peringatan Dini:** Mendeteksi lonjakan gas berbahaya (CO) dan anomali radiasi gamma di lingkungan sekitar.
 
 ---
 
-## 🏗️ Alur Sistem
+## 📸 Dokumentasi Perangkat (Hardware Gallery)
 
-Data dikumpulkan dari sensor lapangan dan dikirimkan ke server untuk ditampilkan ke masyarakat.
+Berikut adalah implementasi fisik dari *Node Sensor* yang telah dikembangkan. Alat ini dirancang *compact*, *portable*, dan tahan terhadap kondisi luar ruangan.
+
+<div align="center">
+  <table border="0">
+    <tr>
+      <td align="center">
+        <img src="assets/alat1.jpg" width="300" alt="Tampak Depan Alat"><br>
+        <b>Tampak Depan (Casing 3D Print)</b>
+      </td>
+      <td align="center">
+        <img src="assets/alat2.jpg" width="300" alt="Komponen Internal"><br>
+        <b>Komponen Internal & Sensor</b>
+      </td>
+    </tr>
+  </table>
+  <br>
+  <i>Desain menggunakan casing PLA+ dengan ventilasi udara untuk sensor gas dan perlindungan tabung Geiger Müller.</i>
+</div>
+
+---
+
+## 💻 Visualisasi Dashboard Web
+
+Data yang dikirim oleh alat dapat diakses melalui dashboard berbasis web yang responsif. Tampilan ini dirancang agar mudah dipahami oleh pengguna awam sekalipun.
+
+<div align="center">
+  <img src="assets/web_dashboard.png" width="90%" alt="Tampilan Web Dashboard">
+  <br>
+  <i>Fitur Dashboard: Grafik Real-time, Indikator Status (Aman/Bahaya), Peta Lokasi GPS, dan Angka Parameter Terkini.</i>
+</div>
+
+---
+
+## 🏗️ Arsitektur & Alur Sistem
+
+Sistem bekerja dengan prinsip *Telemetri Jarak Jauh*. Sensor mengambil data di lapangan, dikirim via LoRa ke Gateway, lalu diunggah ke Cloud.
 
 ```mermaid
 graph LR
-    A[Node Sensor] -->|LoRa 433MHz| B[Gateway ESP32]
-    B -->|WiFi| C[ThingSpeak Cloud]
-    C -->|API| D[Web Dashboard]
-    D -->|Akses| E[Masyarakat/User]
+    subgraph NODE SENSOR [Transmitter - Lapangan]
+    A1[Sensor MQ-7/MQ-135] -->|ADC| MCU1(ESP32 Node)
+    A2[Geiger Counter] -->|Interrupt| MCU1
+    A3[GPS NEO-7M] -->|UART| MCU1
+    MCU1 -->|LoRa 433MHz| RF{Udara Bebas}
+    end
+    
+    subgraph GATEWAY [Receiver - Indoor]
+    RF -->|Receiver| MCU2(ESP32 Gateway)
+    MCU2 -->|WiFi HTTP| CLOUD[ThingSpeak Server]
+    end
+    
+    subgraph USER INTERFACE
+    CLOUD -->|JSON API| WEB[Web Dashboard]
+    WEB -->|Visualisasi| USER[Masyarakat]
+    end
