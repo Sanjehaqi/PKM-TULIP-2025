@@ -1,5 +1,5 @@
 <div align="center">
- <img src="https://raw.githubusercontent.com/Sanjehaqi/PKM-TULIP-2025/main/PKM_TULIP_FINAL/assets/tulip-logo.png" alt="Logo PKM TULIP" width="150">
+ <img src="https://raw.githubusercontent.com/Sanjehaqi/PKM-TULIP-2025/main/PKM_TULIP_FINAL/assets/tulip-logo.png" alt="Logo PKM TULIP" width="120">
 
   <h1>PKM-TULIP: Smart Radiation & Air Quality Monitoring</h1>
 
