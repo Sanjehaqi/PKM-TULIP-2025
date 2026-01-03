@@ -59,31 +59,6 @@ Data yang dikirim oleh alat dapat diakses melalui dashboard berbasis web yang re
 
 ---
 
-## 🏗️ Arsitektur & Alur Sistem
-
-Sistem bekerja dengan prinsip *Telemetri Jarak Jauh*. Sensor mengambil data di lapangan, dikirim melalui LoRa ke Gateway, lalu diunggah ke Cloud untuk divisualisasikan.
-
-```mermaid
-graph LR
-    subgraph NODE SENSOR [Transmitter - Lapangan]
-    A1[Sensor MQ-7 / MQ-135] -->|ADC| MCU1(ESP32 Node)
-    A2[Geiger Counter] -->|Interrupt| MCU1
-    A3[GPS NEO-7M] -->|UART| MCU1
-    MCU1 -->|LoRa 433 MHz| RF{Udara Bebas}
-    end
-
-    subgraph GATEWAY [Receiver - Indoor]
-    RF -->|Receiver| MCU2(ESP32 Gateway)
-    MCU2 -->|WiFi HTTP| CLOUD[ThingSpeak Server]
-    end
-
-    subgraph USER_INTERFACE [User Interface]
-    CLOUD -->|JSON API| WEB[Web Dashboard]
-    WEB -->|Visualisasi| USER[Masyarakat]
-    end
-
----
-
 ## 🔄 Alur Kerja Sistem
 
 1. **Akuisisi Data**
@@ -190,3 +165,28 @@ serta nuklir**.
 <div align="center">
   <b>🌷 PKM-TULIP — Monitoring Lingkungan untuk Masa Depan yang Aman 🌍</b>
 </div>
+
+---
+
+## 🏗️ Arsitektur & Alur Sistem
+
+Sistem bekerja dengan prinsip *Telemetri Jarak Jauh*. Sensor mengambil data di lapangan, dikirim melalui LoRa ke Gateway, lalu diunggah ke Cloud untuk divisualisasikan.
+
+```mermaid
+graph LR
+    subgraph NODE SENSOR [Transmitter - Lapangan]
+    A1[Sensor MQ-7 / MQ-135] -->|ADC| MCU1(ESP32 Node)
+    A2[Geiger Counter] -->|Interrupt| MCU1
+    A3[GPS NEO-7M] -->|UART| MCU1
+    MCU1 -->|LoRa 433 MHz| RF{Udara Bebas}
+    end
+
+    subgraph GATEWAY [Receiver - Indoor]
+    RF -->|Receiver| MCU2(ESP32 Gateway)
+    MCU2 -->|WiFi HTTP| CLOUD[ThingSpeak Server]
+    end
+
+    subgraph USER_INTERFACE [User Interface]
+    CLOUD -->|JSON API| WEB[Web Dashboard]
+    WEB -->|Visualisasi| USER[Masyarakat]
+    end
