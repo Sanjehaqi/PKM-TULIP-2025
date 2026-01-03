@@ -35,11 +35,11 @@ Berikut adalah implementasi fisik dari *Node Sensor* yang telah dikembangkan. Al
   <table border="0">
     <tr>
       <td align="center">
-        <img src="assets/alat1.jpg" width="300" alt="Tampak Depan Alat"><br>
+        <img src="PKM_TULIP_FINAL/assets/alat1.jpeg" width="300" alt="Tampak Depan Alat"><br>
         <b>Tampak Depan (Casing 3D Print)</b>
       </td>
       <td align="center">
-        <img src="assets/alat2.jpg" width="300" alt="Komponen Internal"><br>
+        <img src="PKM_TULIP_FINAL/assets/alat2.jpeg" width="300" alt="Komponen Internal"><br>
         <b>Komponen Internal & Sensor</b>
       </td>
     </tr>
@@ -55,7 +55,7 @@ Berikut adalah implementasi fisik dari *Node Sensor* yang telah dikembangkan. Al
 Data yang dikirim oleh alat dapat diakses melalui dashboard berbasis web yang responsif. Tampilan ini dirancang agar mudah dipahami oleh pengguna awam sekalipun.
 
 <div align="center">
-  <img src="assets/web_dashboard.png" width="90%" alt="Tampilan Web Dashboard">
+  <img src="PKM_TULIP_FINAL/assets/tampilanweb.png" width="90%" alt="Tampilan Web Dashboard">
   <br>
   <i>Fitur Dashboard: Grafik Real-time, Indikator Status (Aman/Bahaya), Peta Lokasi GPS, dan Angka Parameter Terkini.</i>
 </div>
